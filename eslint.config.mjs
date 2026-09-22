@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored AI-agent skill/tooling files — not project source.
+    ".claude/**",
+    ".agents/**",
+    ".windsurf/**",
+    ".cursor/**",
+    ".codex/**",
+    "src/generated/**",
   ]),
 ]);
 

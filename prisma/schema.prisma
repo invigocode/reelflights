@@ -1,0 +1,46 @@
+// ReelFlights data model — destinations and airports only.
+// Flight prices/availability are never persisted here; they are
+// fetched live (or from mock data) and cached in-memory/at the edge.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Airport {
+  id          String   @id @default(cuid())
+  iataCode    String   @unique @db.VarChar(3)
+  name        String
+  city        String
+  country     String
+  countryCode String   @db.VarChar(2)
+  latitude    Float?
+  longitude   Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([city])
+  @@index([country])
+}
+
+model Destination {
+  id          String   @id @default(cuid())
+  city        String
+  country     String
+  countryCode String   @db.VarChar(2)
+  airportCode String   @db.VarChar(3)
+  airportName String
+  imageUrl    String
+  imageAlt    String
+  slug        String   @unique
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active])
+  @@index([airportCode])
+}
