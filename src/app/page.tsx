@@ -1,6 +1,11 @@
 import { getAirports } from "@/lib/airports";
 import { SearchExperience } from "@/components/SearchExperience";
 
+// Render at request time rather than build time: this page queries Postgres
+// for the airport list, and the database isn't guaranteed to be reachable
+// during the build step (e.g. before it's provisioned on a fresh deploy).
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const airports = await getAirports();
 
